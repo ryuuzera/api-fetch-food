@@ -1,3 +1,5 @@
+import TextUtility from '../../infra/services/textService/text.utility';
+
 export type PersonProps = {
   id?: number;
   cpf?: string;

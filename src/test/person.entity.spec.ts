@@ -1,6 +1,7 @@
 // Importe a classe Person e seus tipos
 
-import Person, { PersonProps } from "../domain/entities/person.entity";
+import Person, { PersonProps } from '../domain/entities/person.entity';
+import TextUtility from '../infra/services/textService/text.utility';
 
 describe('Person Class', () => {
   let person: Person;
@@ -26,12 +27,12 @@ describe('Person Class', () => {
   it('should get and set cpf', () => {
     const newCPF = '987.654.321-00';
     person.updateCPF(newCPF);
-    expect(person.cpf).toBe(newCPF);
+    expect(person.cpf).toBe(TextUtility.removeSpecialCharacters(newCPF));
   });
 
   it('should get and set cnpj', () => {
     const newCNPJ = '98.765.432/0001-09';
     person.updateCNPJ(newCNPJ);
-    expect(person.cnpj).toBe(newCNPJ);
+    expect(person.cnpj).toBe(TextUtility.removeSpecialCharacters(newCNPJ));
   });
 });
