@@ -1,0 +1,60 @@
+datasource pg {
+  url      = env("POSTGRES_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./schema"
+}
+
+model Person {
+  id     Int     @id @default(autoincrement())
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int     @unique
+  cpf    String? @unique
+  cnpj   String? @unique
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  email         String   @unique
+  username      String   @unique
+  password      String
+  refresh_token String
+  person        Person?
+}
+
+model Group {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+}
+
+model Price {
+  id         Int         @id @default(autoincrement())
+  price      Float
+  promo      Float?
+  promoStart DateTime?
+  promoEnd   DateTime?
+  product    Product?
+  additional Additional?
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  sku         String
+  name        String
+  description String?
+  price       Price   @relation(fields: [priceId], references: [id])
+  priceId     Int     @unique
+}
+
+model Additional {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  priceId     Int     @unique
+  price       Price   @relation(fields: [priceId], references: [id])
+}

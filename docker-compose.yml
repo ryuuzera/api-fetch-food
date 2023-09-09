@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - /usr/projects/api-fetch-food/database/create-database.sql
+    environment:
+      POSTGRES_PASSWORD: fetch2023
+      POSTGRES_DB: fetchfood
+    ports:
+      - '5432:5432'
